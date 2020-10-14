@@ -5,15 +5,16 @@
 const int LOADCELL_DOUT_PIN = 2;
 const int LOADCELL_SCK_PIN = 3;
 // Button circuit wiring
-const int buttonPin5 = 5;     // the number of the pushbutton pin -- PIN5
-const int buttonPin6 = 6;     // the number of the pushbutton pin -- PIN6
+const int buttonPin5 = 5; // the number of the pushbutton pin -- PIN5
+const int buttonPin6 = 6; // the number of the pushbutton pin -- PIN6
 
 // variables will change:
-int buttonState5 = 0;         // variable for reading the pushbutton status for tare
-int buttonState6 = 0;         // variable for reading the pushbutton status for weight added
+int buttonState5 = 0; // variable for reading the pushbutton status for tare
+int buttonState6 = 0; // variable for reading the pushbutton status for weight added
 long weight = 0;
 long tar = 0;
 long reading = 0;
+long deck_max = 315; // how much the deck weighs total
 HX711 scale;
 
 void setup() {
