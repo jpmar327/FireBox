@@ -17,7 +17,7 @@ long reading = 0;
 long deck_max = 315; // how much the deck weighs total
 int min = 100;
 int max = 190;
-int max_weight;
+int max_weight = random(min,max);
 HX711 scale;
 
 void setup() {
