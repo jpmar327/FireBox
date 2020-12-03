@@ -2,31 +2,39 @@
 #include "HX711.h"
 // constants won't change. They're used here to set pin numbers:
 // HX711 circuit wiring
-const int LOADCELL_DOUT_PIN = 2;
-const int LOADCELL_SCK_PIN = 3;
+const int LOADCELL_DOUT_PIN = 2; //Arduino pin connected to button's pin
+const int LOADCELL_SCK_PIN = 3; // Arduino pin connected to load cell's pin
+//const int BUTTON_PIN = 7; // Arduino pin connected to button's pin
+const int SERVO_PIN  = 10; // Arduino pin connected to servo motor's pin
+
+Servo servo; // create servo object to control a servo
+HX711 scale; // create scale object to read load cell
+
 // Button circuit wiring
 const int buttonPin5 = 5; // the number of the pushbutton pin -- PIN5
 const int buttonPin6 = 6; // the number of the pushbutton pin -- PIN6
 
-// variables will change:
+
+int angle = 0;        // the current angle of servo motor
 int buttonState5 = 0; // variable for reading the pushbutton status for tare
 int buttonState6 = 0; // variable for reading the pushbutton status for weight added
 long weight = 0;
-long tar = 0;
-long reading = 0;
-long deck_max = 315; // how much the deck weighs total
+long tar = 0;         // tare weight
+long reading = 0;     // starting load cell weight reading
+long deck_max = 315;  // how much the deck weighs total
 int min = 100;
 int max = 190;
 int max_weight = random(min,max);
-HX711 scale;
+
 
 void setup() {
-  // initialize the pushbutton pin as an input:
-  pinMode(buttonPin5, INPUT);
-  pinMode(buttonPin6, INPUT);
-  // baudrate
-  Serial.begin(57600);
+  Serial.begin(57600);          // initialize serial - baudrate
+  pinMode(buttonPin5, INPUT);   // initialize the pushbutton pin 5 as an input
+  pinMode(buttonPin6, INPUT);   // initialize the pushbutton pin 6 as an input
+  servo.attach(SERVO_PIN);      // attaches the servo on pin 10 to the servo object
+ 
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
+  servo.write(angle);
   randomSeed(analogRead(0));
   
 //  scale.tare();
@@ -44,6 +52,10 @@ void loop() {
     tar = -(scale.read());
     Serial.print("TARE READING: ");
     weight = 0;
+    if(angle == 90) {
+      angle = 0;
+      servo.write(angle);
+    }
     Serial.println(weight);
     Serial.print("NEW MAX WEIGHT: ");
     Serial.println(max_weight);
@@ -60,6 +72,20 @@ void loop() {
     if (weight >= max_weight) {
       Serial.print("MAX WEIGHT HIT: ");
       Serial.println(max_weight);
+      if(angle == 0) {
+        angle = 90;
+        servo.write(angle);
+      }
+//      if(lastButtonState == HIGH && currentButtonState == LOW) {
+//      // change angle of servo motor
+//      if(angle == 0)
+//        angle = 90;
+//      else
+//      if(angle == 90)
+//        angle = 0;
+  
+      // control servo motor arccoding to the angle
+//      servo.write(angle);
     }
   }
 }
