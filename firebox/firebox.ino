@@ -20,7 +20,7 @@ int buttonState5 = 0; // variable for reading the pushbutton status for tare
 int buttonState6 = 0; // variable for reading the pushbutton status for weight added
 long weight = 0;
 long tar = 0;         // tare weight
-long reading = 0;     // starting load cell weight reading
+long reading = 0;     // s tarting load cell weight reading
 long deck_max = 315;  // how much the deck weighs total
 int min = 100;
 int max = 190;
@@ -70,11 +70,12 @@ void loop() {
     Serial.println(weight);
     delay(1000);
     if (weight >= max_weight) {
-      Serial.print("MAX WEIGHT HIT: ");
-      Serial.println(max_weight);
+
       if(angle == 0) {
         angle = 90;
         servo.write(angle);
+        Serial.print("MAX WEIGHT HIT: ");
+        Serial.println(max_weight);
       }
 //      if(lastButtonState == HIGH && currentButtonState == LOW) {
 //      // change angle of servo motor
