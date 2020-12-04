@@ -1,6 +1,6 @@
 
 #include "HX711.h"
-#include<Servo.h>
+#include "Servo.h"
 // constants won't change. They're used here to set pin numbers:
 // HX711 circuit wiring
 const int LOADCELL_DOUT_PIN = 2; //Arduino pin connected to button's pin
@@ -26,7 +26,6 @@ long deck_max = 315;  // how much the deck weighs total
 int min = 100;
 int max = 190;
 int max_weight = random(min,max);
-
 
 void setup() {
   Serial.begin(57600);          // initialize serial - baudrate
@@ -57,6 +56,7 @@ void loop() {
       angle = 0;
       servo.write(angle);
     }
+    
     Serial.println(weight);
     Serial.print("NEW MAX WEIGHT: ");
     Serial.println(max_weight);
@@ -69,15 +69,16 @@ void loop() {
     weight = (tar+reading)/100;
     Serial.print("WEIGHT READING: ");
     Serial.println(weight);
-    delay(1000);
+    
     if (weight >= max_weight) {
-
+    
       if(angle == 0) {
         angle = 90;
         servo.write(angle);
         Serial.print("MAX WEIGHT HIT: ");
         Serial.println(max_weight);
       }
+     delay(1000);
 //      if(lastButtonState == HIGH && currentButtonState == LOW) {
 //      // change angle of servo motor
 //      if(angle == 0)

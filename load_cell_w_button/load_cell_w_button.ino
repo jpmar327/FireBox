@@ -4,7 +4,6 @@
 // HX711 circuit wiring
 const int LOADCELL_DOUT_PIN = 2;
 const int LOADCELL_SCK_PIN = 3;
-
 // Button circuit wiring
 const int buttonPin5 = 5; // the number of the pushbutton pin -- PIN5
 const int buttonPin6 = 6; // the number of the pushbutton pin -- PIN6
@@ -16,9 +15,6 @@ long weight = 0;
 long tar = 0;
 long reading = 0;
 long deck_max = 315; // how much the deck weighs total
-int min = 100;
-int max = 190;
-int max_weight = random(min,max);
 HX711 scale;
 
 void setup() {
@@ -28,39 +24,29 @@ void setup() {
   // baudrate
   Serial.begin(57600);
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
-  randomSeed(analogRead(0));
-  
 //  scale.tare();
 }
 
 void loop() {
-  
-  //  scale.tare();
+//  scale.tare();
   // read the state of the pushbutton value:
   buttonState5 = digitalRead(buttonPin5);
   buttonState6 = digitalRead(buttonPin6);
   if (buttonState5 == HIGH) {
-    max_weight = random(min,max);
-    // reading = scale.read();
-    tar = -(scale.read());
-    Serial.print("TARE READING: ");
-    weight = 0;
-    Serial.println(weight);
-    Serial.print("NEW MAX WEIGHT: ");
-    Serial.println(max_weight);
-    delay(1000);
-    // weight = 0;
-    // turn LED on:
-  }
-  else if (buttonState6 == HIGH) {
-    reading = scale.read();
-    weight = (tar+reading)/100;
-    Serial.print("WEIGHT READING: ");
-    Serial.println(weight);
-    delay(1000);
-    if (weight >= max_weight) {
-      Serial.print("MAX WEIGHT HIT: ");
-      Serial.println(max_weight);
-    }
-  }
+        // reading = scale.read();
+        tar = -(scale.read());
+        Serial.print("HX711 TARE reading: ");
+        weight = 0;
+        Serial.println(weight);
+        delay(1000);
+        // weight = 0;
+        // turn LED on:
+      } 
+      else if (buttonState6 == HIGH) {
+        reading = scale.read();
+        weight = (tar+reading)/100;
+        Serial.print("HX711 reading: ");
+        Serial.println(weight);
+        delay(1000);
+      }
 }
