@@ -61,14 +61,12 @@ void loop() {
     Serial.print("NEW MAX WEIGHT: ");
     Serial.println(max_weight);
     delay(1000);
-    // weight = 0;
-    // turn LED on:
+
   }
   else if (buttonState6 == HIGH) {
     reading = scale.read();
     weight = (tar+reading)/100;
-    Serial.print("WEIGHT READING: ");
-    Serial.println(weight);
+
     
     if (weight >= max_weight) {
     
@@ -77,18 +75,11 @@ void loop() {
         servo.write(angle);
         Serial.print("MAX WEIGHT HIT: ");
         Serial.println(max_weight);
-      }
-     delay(1000);
-//      if(lastButtonState == HIGH && currentButtonState == LOW) {
-//      // change angle of servo motor
-//      if(angle == 0)
-//        angle = 90;
-//      else
-//      if(angle == 90)
-//        angle = 0;
-  
-      // control servo motor arccoding to the angle
-//      servo.write(angle);
+       }
+       Serial.print("WEIGHT READING: ");
+       Serial.println(weight);
+       delay(1000);
+
     }
   }
 }
