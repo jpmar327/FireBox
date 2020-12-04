@@ -52,21 +52,23 @@ void loop() {
     tar = -(scale.read());
     Serial.print("TARE READING: ");
     weight = 0;
+    Serial.println(weight);
+    Serial.print("NEW MAX WEIGHT: ");
+    Serial.println(max_weight);
     if(angle == 90) {
       angle = 0;
       servo.write(angle);
     }
     
-    Serial.println(weight);
-    Serial.print("NEW MAX WEIGHT: ");
-    Serial.println(max_weight);
+
     delay(1000);
 
   }
   else if (buttonState6 == HIGH) {
     reading = scale.read();
     weight = (tar+reading)/100;
-
+    Serial.print("WEIGHT READING: ");
+    Serial.println(weight);
     
     if (weight >= max_weight) {
     
@@ -76,8 +78,7 @@ void loop() {
         Serial.print("MAX WEIGHT HIT: ");
         Serial.println(max_weight);
        }
-       Serial.print("WEIGHT READING: ");
-       Serial.println(weight);
+
        delay(1000);
 
     }
