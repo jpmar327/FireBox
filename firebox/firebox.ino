@@ -1,5 +1,6 @@
 
 #include "HX711.h"
+#include<Servo.h>
 // constants won't change. They're used here to set pin numbers:
 // HX711 circuit wiring
 const int LOADCELL_DOUT_PIN = 2; //Arduino pin connected to button's pin
